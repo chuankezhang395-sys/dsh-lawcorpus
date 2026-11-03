@@ -1,8 +1,8 @@
 {
   "name": "dsh-lawcorpus",
-  "version": "0.3.0",
+  "version": "0.2.2",
   "private": true,
-  "description": "法学论文框架语料库（DeepSeek Harness 插件）：内置近三年（2024–2026）四本 CLSCI 法学期刊 850 篇论文的题名、作者、摘要、关键词、目录骨架，支持 BM25 检索、体裁画像、框架卡抽取与投稿对标，全部离线、零依赖。",
+  "description": "法学论文框架语料库（DeepSeek Harness 插件）：内置近三年（2024–2026）四本 CLSCI 法学期刊 850 条题录（题名、作者、摘要、关键词、目录骨架），支持 BM25 检索、体裁画像、框架卡抽取与投稿对标，全部离线、零依赖。",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -13,6 +13,8 @@
   "files": [
     "lib",
     "data",
+    "skill",
+    "tools",
     "cordis.patch.yml",
     "README.md"
   ],

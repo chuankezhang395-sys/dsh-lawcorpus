@@ -4,7 +4,7 @@
 # 插一条同样的 id/name，并在 profile package.json 的 dsh.profile.bundles 里加上
 # "dsh-lawcorpus"，然后重启 DeepSeek Harness。
 #
-# dataDir 留空时直接读插件自带的 data/*.jsonl（近三年 850 篇真实题录，只读）。
+# dataDir 留空时直接读插件自带的 data/*.jsonl（近三年真实题录，只读）。
 # 语料只存题录 + 摘要 + 关键词 + 目录，不存全文，不回传任何服务器。
 - insert:
     - id: lawcorpus

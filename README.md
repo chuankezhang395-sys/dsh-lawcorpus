@@ -1,10 +1,14 @@
 # dsh-lawcorpus · 法学论文框架语料库
 
-dsh-lawcorpus 是 DeepSeek Harness 插件，内置 2024–2026 年《中国法学》《比较法研究》《法学研究》《中外法学》四本 CLSCI 期刊共 850 篇真实论文的题名、作者、摘要、关键词与目录骨架。它不做全文检索，而是把论文「框架」结构化存成 JSONL，供选题、搭框架、仿写、投稿对标时检索真实语料。提供五个工具：status 查覆盖、profile 刊画像、frame 框架卡、match 投稿对标、export 导出。纯本地离线、零依赖、不回传服务器。
+一个 **DeepSeek Harness 插件**，内置近三年（2024–2026）四本 CLSCI 法学期刊（中国法学 / 比较法研究 / 法学研究 / 中外法学）真实论文的题名、作者、摘要、关键词与目录骨架，全部**本地离线、零依赖**。
+
+做的是「论文框架语料库」：把期刊论文的**目录（章节小标题）、摘要、关键词、题名**结构化存成 JSONL，供模型在选题、仿写、投稿对标时检索与画像。**不存全文，不回传任何服务器。**
 
 ---
 
 ## 语料范围
+
+> 下表为打包时的快照；具体篇数、按刊/按年分布、完整率以 `lawcorpus_status` 的实时输出为准。
 
 | 期刊 | 2024 | 2025 | 2026 | 合计 |
 |---|---|---|---|---|
@@ -12,7 +16,7 @@ dsh-lawcorpus 是 DeepSeek Harness 插件，内置 2024–2026 年《中国法�
 | 比较法研究 | 82 | 82 | 56 | 220 |
 | 法学研究 | 69 | 70 | 58 | 197 |
 | 中外法学 | 42 | 82 | 56 | 180 |
-| **合计** | | | | **850**（含 3 篇笔谈/编者按） |
+| **合计** | **282** | **324** | **244** | **850**（含 3 篇笔谈/编者按） |
 
 - 850 = 847 篇标准论文 + 3 篇笔谈/编者按。
 - 标准论文的**摘要 / 关键词 / 目录完整率均为 100%**，无乱码、无缺期号、无单字作者。
@@ -35,7 +39,9 @@ dsh-lawcorpus 是 DeepSeek Harness 插件，内置 2024–2026 年《中国法�
 | `lawcorpus_profile` | 体裁/句式/功能句/字数/关键词画像 | `journal`、`yearFrom`、`yearTo`、`genre`、`topic` |
 | `lawcorpus_frame` | 按选题抽「框架卡」（问题/方法/结论槽位 + 目录骨架 + 高频词） | `topic`（必填）、`journal`、`genre`、`limit` |
 | `lawcorpus_match` | 把你的摘要/标题/关键词对标本库，给出最近似论文与差距 | `abstract`（必填）、`title`、`keywords`、`journal` |
-| `lawcorpus_export` | 导出 CSV / JSONL / Markdown | `format`、`journal`、`yearFrom`、`yearTo`、`outFile` |
+| `lawcorpus_export` | 导出 CSV / JSONL / Markdown | `format`、`journal`、`yearFrom`、`yearTo`、`outFile`、`includeAbstract`、`overwrite` |
+
+导出仅允许写入会话工作区，默认不覆盖已有文件；确需覆盖时显式设置 `overwrite=true`。`lawcorpus_match` 的分数表示查询词元覆盖率，用于粗略参考，不代表语义相似概率或投稿录用概率。
 
 典型用法示例：
 
@@ -80,9 +86,27 @@ lawcorpus_status verbose=true
 
 - 纯 ESM、**零依赖**（无 sqlite / 原生模块），Node `^22.19.0 || >=24.0.0`。
 - 检索 = 内存 BM25（字段权重：标题 3 / 关键词 4 / 摘要 1，汉字 bigram + 拉丁整词分词）。
-- 语料在启动时载入内存并按文件 `mtime+size` 缓存；850 篇量级瞬间完成。
+- 语料在启动时载入内存并按文件 `mtime+size` 缓存；千篇以内量级瞬间完成。
+
+## 自动触发（law-paper-writing skill）
+
+本插件附带了全局 Skill `skill/law-paper-writing/SKILL.md`。插件加载时（apply 阶段）会**自动把它装进** harness-home 的 `skills/law-paper-writing/SKILL.md`（`DSH_HOME` 环境变量指向 harness-home），装完插件重启后即可自动触发，**无需手动拷贝**：检测到你在做**法学论文相关事项**（写摘要/标题/关键词/目录、选题、润色、审稿自查、投稿对标、搭论证框架）时会**自动调用** `lawcorpus_*` 工具，无需手动点名。详见该 SKILL.md 的触发规则与场景映射表。
+
+自动安装只做「缺失时补齐」：目标文件已存在则不覆盖（保留你改过的版本）；`DSH_HOME` 未设置或插件包内缺源文件时仅告警跳过，不影响插件加载。若首次重启后 skill 尚未出现在技能列表，再重启一次即可。
+
+> 提示：具体篇数、覆盖、完整率以 `lawcorpus_status` 的输出为准；SKILL.md 里不写死数字。
+
+## 扩展语料（tools/）
+
+`tools/` 目录提供从「可搜索」PDF 重建/扩展语料的脚本（`build_corpus.py` / `run_batch.sh` / `summary.py` / `analyze.py` / `任务书.md`）。想加新刊、加新年份、换数据源时先读 `tools/README.md` 与 `tools/任务书.md`，再用 `bash tools/run_batch.sh <PDF目录>` 重建 `data/*.jsonl`。日常查询无需这些脚本。
 
 ## 边界声明
 
 - 语料为**题录层**（题名/作者/摘要/关键词/目录），不含全文，无法回答「某篇原文第几段写了什么」。
 - 体裁、标题句式、功能句分类为规则抽取，供「骨架参考」，不是官方标注。
+
+## 变更记录
+
+- v0.2.2：修复 `lawcorpus_status` 按刊过滤时把已覆盖刊误报为「还没覆盖」；单字主题词查询给出明确提示；导出默认文件名改用本地时间（原为 UTC）；相对 `dataDir` 改为以插件目录为基准；`inject` 声明补全 `workingDirectory`；修正打包中 `tools/任务书.md` 文件名乱码。
+- v0.2.1：`lawcorpus_frame` 体裁筛选假阴性修复、`lawcorpus_match` 评分改为词元覆盖率、导出路径安全加固、skill 安装防并发竞态、`lawcorpus_status` 增加 verbose 逐年矩阵。
+- v0.2.0：首版。

@@ -1,0 +1,7 @@
+node_modules/
+work/
+*.txt
+*.err
+*_report.json
+test/.data/
+.DS_Store
