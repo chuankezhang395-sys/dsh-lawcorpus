@@ -1,0 +1,91 @@
+{
+  "source_commit": "cb1c80573acd02e4d0340557cd101b415dc94547",
+  "archive": "dist/skill.zip",
+  "archive_sha256": "6541aaae5bf2e5596586bbb2e0471dfa315f57d9356d453fa247f499152533c9",
+  "archive_bytes": 530851,
+  "entries": [
+    "law-paper-writing/LICENSE",
+    "law-paper-writing/README.md",
+    "law-paper-writing/SKILL.md",
+    "law-paper-writing/agents/openai.yaml",
+    "law-paper-writing/data/articles_bjfyj2024.jsonl",
+    "law-paper-writing/data/articles_bjfyj2025.jsonl",
+    "law-paper-writing/data/articles_bjfyj2026.jsonl",
+    "law-paper-writing/data/articles_fxyj2024.jsonl",
+    "law-paper-writing/data/articles_fxyj2025.jsonl",
+    "law-paper-writing/data/articles_fxyj2026.jsonl",
+    "law-paper-writing/data/articles_zgfx2024.jsonl",
+    "law-paper-writing/data/articles_zgfx2025.jsonl",
+    "law-paper-writing/data/articles_zgfx2026.jsonl",
+    "law-paper-writing/data/articles_zwfx2024.jsonl",
+    "law-paper-writing/data/articles_zwfx2025.jsonl",
+    "law-paper-writing/data/articles_zwfx2026.jsonl",
+    "law-paper-writing/scripts/lawcorpus.py"
+  ],
+  "skill_entry_count": 1,
+  "jsonl_file_count": 12,
+  "total_records": 850,
+  "standard_articles": 847,
+  "regression_tests": 9,
+  "regression_result": "PASS",
+  "standalone_cli_checks": {
+    "status": "PASS: 850 records / 847 articles",
+    "search": "PASS: 亲属扶养=1; 抚养费=0",
+    "profile": "PASS: 法学研究2025=70",
+    "frame": "PASS: original outline preserved",
+    "match": "PASS: expected top record",
+    "export": "PASS: Markdown / CSV / JSONL; full 850-record JSONL roundtrip"
+  },
+  "original_and_packaged_data_hashes_unchanged": true,
+  "data_manifest": {
+    "articles_bjfyj2024.jsonl": {
+      "sha256": "0c26b5d2ab1e5faf5dd7e31510783afe70d6e69a2712c8c48789137206471117",
+      "records": 82
+    },
+    "articles_bjfyj2025.jsonl": {
+      "sha256": "076e896823238f01d4e0ecd19dc8f33d8dfef926aee50314deb5058596af24ea",
+      "records": 82
+    },
+    "articles_bjfyj2026.jsonl": {
+      "sha256": "7d41349fa31645fb59a260e47ef93df6eb39ed5ad76e07d7951acae3acbd449e",
+      "records": 56
+    },
+    "articles_fxyj2024.jsonl": {
+      "sha256": "98fe881108c6f9b52c5ee47d84e70a5e2b4130eaf8777e5caa525e7ed1e3f48a",
+      "records": 69
+    },
+    "articles_fxyj2025.jsonl": {
+      "sha256": "9c4cd583f4757e7cc3b06fae30f3191465738d9f2afd3dfb7bd091b501debefd",
+      "records": 70
+    },
+    "articles_fxyj2026.jsonl": {
+      "sha256": "c244968b411fac2b4bf690dba3fbb61bb57dc021cc388c11740b907e282f6ed1",
+      "records": 58
+    },
+    "articles_zgfx2024.jsonl": {
+      "sha256": "9f75f9a4036dbb38fb84e22552b434c0e5daed6d2a47c20b5ee207592b8548a2",
+      "records": 89
+    },
+    "articles_zgfx2025.jsonl": {
+      "sha256": "b17024fdb087d54e24a3312b31b317060ca575194a8a890c175ffa3b7012a59d",
+      "records": 90
+    },
+    "articles_zgfx2026.jsonl": {
+      "sha256": "c688cbb9888ab5f13e1a091290770ee8260e42b344bd91fe2db0b5782f33c0fb",
+      "records": 74
+    },
+    "articles_zwfx2024.jsonl": {
+      "sha256": "76556408650aeb3bb04416bd062425d1ccabe7a3a7ced394e2ace39abc6dd73b",
+      "records": 42
+    },
+    "articles_zwfx2025.jsonl": {
+      "sha256": "e25701b69536684c4f76639cce619759b99ffd76c9c42f66bd4ce958736f7d5c",
+      "records": 82
+    },
+    "articles_zwfx2026.jsonl": {
+      "sha256": "340989d304caa4f9fb78da150a1ff9f225ee859f27565416463e660012e87625",
+      "records": 56
+    }
+  },
+  "chatgpt_upload_tested": false
+}
