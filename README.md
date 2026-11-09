@@ -1,5 +1,22 @@
 # dsh-lawcorpus · 法学论文框架语料库
 
+## 新增：网页版 Codex Cloud / Python 用法
+
+现可直接使用仓库 Skill：`.agents/skills/law-paper-writing/SKILL.md`。Python 3.10+、仅标准库，不需要安装 DeepSeek Harness、Node.js 或API Key。原始 data 及旧插件完整保留。
+
+你可以对 Codex 说：**“使用 law-paper-writing 检索离婚后未成年子女抚养费，区分直接命中与相邻主题，给出真实框架卡和出处。”**
+
+```bash
+python3 .agents/skills/law-paper-writing/scripts/lawcorpus.py status
+python3 .agents/skills/law-paper-writing/scripts/lawcorpus.py search --query "抚养费" --mode phrase
+python3 .agents/skills/law-paper-writing/scripts/lawcorpus.py frame --query "亲属扶养" --limit 3
+```
+
+完整说明：[Codex Cloud 中文使用说明](docs/CODEX_CLOUD_使用说明.md)；验证结果：[测试报告](docs/测试报告.md)。本库“抚养费”无直接短语命中；不能据此推断该领域没有研究。原PDF未附带，字段完整不代表抽取准确；已发现个别疑似截断题名，原样保留。
+
+以下保留原 DeepSeek Harness 说明，其中数据完整率指字段覆盖，不代表逐篇核实：
+
+
 一个 **DeepSeek Harness 插件**，内置近三年（2024–2026）四本 CLSCI 法学期刊（中国法学 / 比较法研究 / 法学研究 / 中外法学）真实论文的题名、作者、摘要、关键词与目录骨架，全部**本地离线、零依赖**。
 
 做的是「论文框架语料库」：把期刊论文的**目录（章节小标题）、摘要、关键词、题名**结构化存成 JSONL，供模型在选题、仿写、投稿对标时检索与画像。**不存全文，不回传任何服务器。**

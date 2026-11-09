@@ -5,3 +5,6 @@ work/
 *_report.json
 test/.data/
 .DS_Store
+__pycache__/
+*.py[cod]
+output/
